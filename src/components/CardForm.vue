@@ -1,5 +1,5 @@
 <template>
-  <div class="form" :class="{ modal: isModal }">
+  <div class="form" :class="{ modal: isModal, increased: increasedForm }">
     <form @submit="createCard">
       <label class="form__label form__label--required" for="card-title"
         >Наименование товара</label
@@ -47,7 +47,12 @@
         required
       />
       <span>Поле является обязательным</span>
-      <button class="btn form__btn" type="submit" :disabled="disabledBtn">
+      <button
+        class="btn form__btn"
+        type="submit"
+        :disabled="disabledBtn"
+        @click="increaseForm"
+      >
         Добавить товар
       </button>
     </form>
@@ -75,10 +80,19 @@ export default {
       price: '',
       habmbBtnContent: 'Добавить товар',
       disabledBtn: true,
+      increasedForm: false,
     };
   },
 
   methods: {
+    increaseForm() {
+      this.increasedForm = true;
+
+      setTimeout(() => {
+        this.increasedForm = false;
+      }, 300);
+    },
+
     isNumber(event) {
       if (event.charCode >= 48 && event.charCode <= 57) {
         return true;
@@ -159,6 +173,7 @@ export default {
   max-width: 332px;
   width: 100%;
   padding: 24px;
+  transition: transform 0.3s cubic-bezier(0.39, 0.58, 0.57, 1);
 
   @include card-effect(
     (0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02))
@@ -169,6 +184,9 @@ export default {
     display: flex;
     max-width: unset;
     padding: 0;
+  }
+  &.increased {
+    transform: scale(1.05);
   }
 
   & > form {
@@ -257,12 +275,26 @@ export default {
     background: #7bae73;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    opacity: 1;
+    transition: opacity 0.3s cubic-bezier(0.39, 0.58, 0.57, 1);
+
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.75;
+    }
 
     &:disabled {
       color: #b4b4b4;
       background: #eeeeee;
       box-shadow: none;
       cursor: unset;
+
+      &:hover,
+      &:focus,
+      &:active {
+        opacity: 1;
+      }
     }
   }
 }
@@ -282,10 +314,11 @@ export default {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   top: 0;
   left: 0;
+  bottom: 0;
   display: block;
   padding: 24px;
 

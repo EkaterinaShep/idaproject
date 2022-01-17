@@ -7,11 +7,12 @@
   <div class="form-cards__container">
     <CardForm @cardCreation="handleCardCreation" />
     <CardsList
-      v-if="!isCardsLoading"
+      @imgLoad="showCards"
+      v-show="!isCardsLoading"
       @cardDeletion="handleCardDeletion"
       :cards="getSortedCards"
     />
-    <div v-else class="loader__container">
+    <div v-show="isCardsLoading" class="loader__container">
       <Loader />
     </div>
   </div>
@@ -37,6 +38,10 @@ export default {
   },
 
   methods: {
+    showCards() {
+      this.isCardsLoading = false;
+    },
+
     handleCardCreation(card) {
       this.cards.push(card);
 
@@ -61,13 +66,15 @@ export default {
       this.isCardsLoading = true;
 
       const cards = localStorage.getItem('cards');
+
       if (cards) {
         this.cards = JSON.parse(cards);
+        return;
       }
+
+      this.isCardsLoading = false;
     } catch (err) {
       console.error(err);
-    } finally {
-      this.isCardsLoading = false;
     }
   },
 
@@ -79,15 +86,35 @@ export default {
             card1.title?.localeCompare(card2.title)
           );
         case 'min':
-          return [...this.cards].sort((card1, card2) =>
-            card1.price?.localeCompare(card2.price)
-          );
+          return [...this.cards].sort((card1, card2) => {
+            const price1 = card1.price
+              .split('')
+              .filter((item) => !/\s/.test(item))
+              .join('');
+            const price2 = card2.price
+              .split('')
+              .filter((item) => !/\s/.test(item))
+              .join('');
+
+            return parseInt(price1) - parseInt(price2);
+          });
         case 'max':
           return [...this.cards]
-            .sort((card1, card2) => card1.price?.localeCompare(card2.price))
+            .sort((card1, card2) => {
+              const price1 = card1.price
+                .split('')
+                .filter((item) => !/\s/.test(item))
+                .join('');
+              const price2 = card2.price
+                .split('')
+                .filter((item) => !/\s/.test(item))
+                .join('');
+
+              return parseInt(price1) - parseInt(price2);
+            })
             .reverse();
         default:
-          return this.cards;
+          return [...this.cards];
       }
     },
   },

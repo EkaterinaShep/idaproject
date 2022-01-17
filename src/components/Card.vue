@@ -1,5 +1,5 @@
 <template>
-  <li class="card" v-show="isLoaded">
+  <li class="card" v-show="isLoadedImg">
     <img
       class="card__img"
       :src="card.imgSrc"
@@ -27,12 +27,14 @@ export default {
 
   data() {
     return {
-      isLoaded: false,
+      isLoadedImg: false,
     };
   },
   methods: {
     showCard() {
-      this.isLoaded = true;
+      this.isLoadedImg = true;
+
+      this.$emit('imgLoad');
     },
 
     showAltImg(event) {
@@ -61,6 +63,16 @@ export default {
   box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
     0px 6px 10px rgba(0, 0, 0, 0.02);
   border-radius: 4px;
+  transition: transform 0.3s cubic-bezier(0.39, 0.58, 0.57, 1);
+
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
+
+    .card__delete-btn {
+      opacity: 1;
+    }
+  }
 
   @include respond-to(765px, max) {
     max-width: unset;
@@ -108,12 +120,6 @@ export default {
     font-size: 24px;
     line-height: 30px;
     overflow-wrap: anywhere;
-  }
-
-  &:hover {
-    .card__delete-btn {
-      opacity: 1;
-    }
   }
 }
 </style>

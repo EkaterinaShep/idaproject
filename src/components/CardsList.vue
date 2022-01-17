@@ -3,6 +3,7 @@
     <transition-group name="card-list"
       ><Card
         @cardDeletion="deleteCard"
+        @imgLoad="emitEvent"
         v-for="card in cards"
         :key="card.id"
         :card="card"
@@ -24,6 +25,10 @@ export default {
   methods: {
     deleteCard(card) {
       this.$emit('cardDeletion', card);
+    },
+
+    emitEvent() {
+      this.$emit('imgLoad');
     },
   },
 };

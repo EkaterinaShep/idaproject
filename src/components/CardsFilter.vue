@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
-    <select v-model="modelValue" @change="handleOptionChange">
-      <option value="default" selected>По умолчанию</option>
+    <select v-model="selectedSort" @change="handleOptionChange">
+      <option value="default">По умолчанию</option>
       <option value="min">Дешевле</option>
       <option value="max">Дороже</option>
       <option value="title">По названию</option>
@@ -11,6 +11,12 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectedSort: this.modelValue,
+    };
+  },
+
   props: {
     modelValue: {
       type: String,
