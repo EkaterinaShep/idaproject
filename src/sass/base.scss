@@ -1,0 +1,71 @@
+@import './mixins.scss';
+
+/* Box model styles start*/
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* Box model styles end*/
+/* Mini reset styles start*/
+.list {
+  padding: 0;
+  list-style: none;
+}
+
+.body,
+.text,
+.list,
+.list > li {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.btn {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.input {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.select {
+  font: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+/* Mini reset styles end*/
+/* Body styles start*/
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  background: rgba(255, 254, 251, 0.8);
+
+  @include respond-to(400px, max) {
+    padding: 16px;
+  }
+}
+
+/* Body styles end*/
