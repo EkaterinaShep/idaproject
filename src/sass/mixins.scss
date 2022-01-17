@@ -1,0 +1,23 @@
+// card-effect
+@mixin card-effect($box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1)) {
+  background: #fffefb;
+  box-shadow: $box-shadow;
+  border-radius: 4px;
+}
+
+// respond-to
+@mixin respond-to($breakpoint, $direction) {
+  @if $direction == max {
+    @media screen and (max-width: $breakpoint) {
+      @content;
+    }
+  } @else if $direction == min {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  } @else {
+    @media ($direction: $breakpoint) {
+      @content;
+    }
+  }
+}
