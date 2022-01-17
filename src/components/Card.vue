@@ -88,6 +88,7 @@ export default {
     font-weight: 600;
     font-size: 20px;
     line-height: 25px;
+    overflow-wrap: anywhere;
   }
 
   &__desc {

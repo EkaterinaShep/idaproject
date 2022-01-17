@@ -12,6 +12,7 @@
         placeholder="Введите наименование товара"
         required
       />
+      <span>Поле является обязательным</span>
       <label class="form__label" for="card-desc">Описание товара</label>
       <textarea
         v-model="card.desc"
@@ -31,6 +32,7 @@
         placeholder="Введите ссылку"
         required
       />
+      <span>Поле является обязательным</span>
       <label class="form__label form__label--required" for="card-price"
         >Цена товара</label
       >
@@ -44,6 +46,7 @@
         placeholder="Введите цену"
         required
       />
+      <span>Поле является обязательным</span>
       <button class="btn form__btn" type="submit" :disabled="disabledBtn">
         Добавить товар
       </button>
@@ -91,8 +94,6 @@ export default {
         this.price = '';
         return;
       }
-
-    
 
       this.price = new Intl.NumberFormat('ru-RU').format(priceWithoutSpaces);
       this.card.price = this.price;
@@ -171,6 +172,9 @@ export default {
   }
 
   & > form {
+    display: flex;
+    flex-direction: column;
+
     @include respond-to(765px, max) {
       width: 0;
       pointer-events: none;
@@ -208,6 +212,25 @@ export default {
     line-height: 15px;
 
     @include card-effect;
+
+    &:valid {
+      & + span {
+        display: none;
+      }
+    }
+
+    &:invalid {
+      margin-bottom: 4px;
+      border: 1px solid #ff8484;
+
+      & + span {
+        display: block;
+        font-size: 8px;
+        line-height: 10px;
+        letter-spacing: -0.02em;
+        color: #{$red};
+      }
+    }
 
     &-card-desc {
       min-height: 108px;

@@ -95,6 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './sass/normalize.scss';
 @import './sass/base.scss';
 @import './sass/typography.scss';
 @import './sass/variables.scss';
